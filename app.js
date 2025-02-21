@@ -15,7 +15,7 @@ function GameBoard() {
   }
 
   const placeMarker = (row, column, marker) => {
-    if (board[row][column].getValue === 0) return;
+    if (board[row][column].getValue() !== 0) return -1;
     board[row][column].setMarker(marker);
   };
 
@@ -30,7 +30,7 @@ function GameBoard() {
 }
 
 function Cell() {
-  let value = " ";
+  let value = 0;
 
   const setMarker = (marker) => {
     value = marker;
@@ -72,9 +72,9 @@ function GameController() {
   };
 
   const playRound = (row, column) => {
-    board.placeMarker(row, column, activePlayer.marker);
-
-    switchPlayerTurn();
+    if (board.placeMarker(row, column, activePlayer.marker) !== -1) {
+      switchPlayerTurn();
+    }
     printNewRound();
   };
 
