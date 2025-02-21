@@ -1,32 +1,42 @@
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages}, ${
-      !this.title ? "read" : "not read yet"
-    }`;
+// Focus on Console Version First
+// PlaceMarker, Populate Board with cells, getBoard
+function GameBoard() {
+  const rows = 3;
+  const columns = 3;
+  const board = [];
+
+  const getBoard = () => board;
+
+  for (let i = 0; i < rows; i++) {
+    board[i] = [];
+    for (let j = 0; j < columns; j++) {
+      board[i].push(Cell());
+    }
+  }
+
+  const placeMarker = (row, column, marker) => {
+    if (board[row][column].getValue === 0) return;
+    board[row][column].setMarker(marker);
   };
+
+  const printBoard = () => {
+    const boardWithCellValues = board.map((row) =>
+      row.map((cell) => cell.getValue())
+    );
+    console.log(boardWithCellValues);
+  };
+
+  return { getBoard, placeMarker, printBoard };
 }
 
-theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
-console.log(theHobbit.info());
+function Cell() {
+  let value = 0;
 
-let animal = {
-  eats: true,
-};
-let rabbit = {
-  jumps: true,
-};
+  const setMarker = (marker) => {
+    value = marker;
+  };
 
-nineteenEightyFour = new Book("1984", "George Orwell", 328, false);
-toKillAMockingbird = new Book("To Kill a Mockingbird", "Harper Lee", 281, true);
-theGreatGatsby = new Book("The Great Gatsby", "F.Scott Fitzgerald", 180, false);
-theGameOfThrones = new Book(
-  "A Game of Thrones",
-  "George R.R. Martin",
-  807,
-  true
-);
-gravitysRainbow = new Book("Gravity's Rainbow", "Thomas Pynchon", 784, false);
+  const getValue = () => value;
+
+  return { setMarker, getValue };
+}
