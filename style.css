@@ -1,0 +1,5 @@
+@import url(fonts/stylesheet.css);
+
+html {
+  font-family: system-ui, sans-serif;
+}
