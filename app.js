@@ -30,7 +30,7 @@ function GameBoard() {
 }
 
 function Cell() {
-  let value = 0;
+  let value = " ";
 
   const setMarker = (marker) => {
     value = marker;
@@ -40,3 +40,46 @@ function Cell() {
 
   return { setMarker, getValue };
 }
+
+// GameController to handle players and turns
+function GameController() {
+  let playerOneName = "Player One";
+  let playerTwoName = "Player Two";
+  let board = GameBoard();
+
+  const players = [
+    {
+      playerName: playerOneName,
+      marker: "X",
+    },
+    {
+      playerName: playerTwoName,
+      marker: "O",
+    },
+  ];
+
+  let activePlayer = players[0];
+
+  const getActivePlayer = () => activePlayer;
+
+  const switchPlayerTurn = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  };
+
+  const printNewRound = () => {
+    board.printBoard();
+    console.log(`${activePlayer.playerName}'s turn..`);
+  };
+
+  const playRound = (row, column) => {
+    board.placeMarker(row, column, activePlayer.marker);
+
+    switchPlayerTurn();
+    printNewRound();
+  };
+
+  printNewRound();
+  return { playRound, getActivePlayer };
+}
+
+const game = GameController();
