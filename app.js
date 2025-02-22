@@ -145,4 +145,12 @@ function Player(playerName, marker, score = 0) {
   return { playerName, marker, score };
 }
 
-const game = GameController();
+function ScreenController(){
+  const game = GameController();
+
+  const updateScreen = () => {
+    
+  }
+}
+
+ScreenController();

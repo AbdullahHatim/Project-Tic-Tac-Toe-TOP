@@ -2,4 +2,64 @@
 
 html {
   font-family: system-ui, sans-serif;
+  --player-one-background-color: lightcoral;
+  --player-two-background-color: lightblue;
+  --player-one-color: #E32636;
+  --player-two-color: #66D3FA;
+  --border-color: #3D3D3D;
+  --primary-white-color: #F7F7F7;
+  --secondary-white-color: #F5F5F5;
+}
+body{
+  height: 100svh;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  background-color: var(--secondary-white-color);
+}
+
+.game-card{
+  background-color: white;
+  aspect-ratio: 3/4;
+  height: 40%;
+  border-radius: 20px; /* Add rounded corners */
+  overflow: hidden; /* Clip content within rounded corners */
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2); /* Increased shadow visibility */
+}
+
+.board-container{
+  height: 70%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  background-color: var(--border-color);
+  gap: 5px;
+}
+
+.cell{
+  background-color: var(--primary-white-color);
+}
+
+.markers-container{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: 100%;
+}
+
+.player-one-marker{
+  background-color: var(--player-one-color);
+}
+
+.player-two-marker{
+  background-color: var(--player-two-color);
+}
+
+.player-turn{
+  margin-top: 10px; /* Add margin to the top */
+  text-align: center; /* Center text within player-turn */
 }
