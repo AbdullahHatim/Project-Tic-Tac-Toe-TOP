@@ -87,7 +87,27 @@ function GameController() {
     }
     return false;
   };
-  const checkDiagonalWin = () => {};
+  const checkDiagonalWin = () => {
+    
+    // 0,0 1,1 2,2
+    const diagonalArray = [];
+    for (let i = 0; i < board.getBoard().length; i++)
+      diagonalArray.push(board.getBoard()[i][i]);
+
+    let firstCellValue = board.getBoard()[0][0].getValue();
+    if (diagonalArray.every((cell) => (cell.getValue() === firstCellValue) && firstCellValue !== 0)) return true;
+    
+
+    const rotatedBoard = board.getBoard().slice().reverse();
+
+    diagonalArray.length = 0;
+    for (let i = 0; i < rotatedBoard.length; i++)
+      diagonalArray.push(rotatedBoard[i][i]);
+
+    firstCellValue = rotatedBoard[0][0].getValue();
+    if (diagonalArray.every((cell) => (cell.getValue() === firstCellValue) && firstCellValue !== 0)) return true;
+
+  };
 
   const checkWin = () => {
     let win = checkHorizontalWin() || checkVerticalWin() || checkDiagonalWin();
