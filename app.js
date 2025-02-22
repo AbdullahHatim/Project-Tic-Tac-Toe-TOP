@@ -51,7 +51,10 @@ function GameController() {
     Player(playerOneName, "X", 0),
     Player(playerTwoName, "O", 0),
   ];
-
+  const getPlayerScores = () => players.map((player) => {
+    return {playerName: player.playerName, score: player.score}
+  });
+  
   let activePlayer = players[0];
 
   const getActivePlayer = () => activePlayer;
@@ -81,8 +84,8 @@ function GameController() {
   };
 
   const checkVerticalWin = () => {
-    const rotatedBoard = board.getBoard()[0].map((_, col) => board.getBoard().map((row) => row[col]));
-    for (column of rotatedBoard) {
+    const transposedBoard = board.getBoard()[0].map((_, col) => board.getBoard().map((row) => row[col]));
+    for (column of transposedBoard) {
       if (column.every((cell) => cell.getValue() !== 0 && cell.getValue() === column[0].getValue())) return true;
     }
     return false;
@@ -123,7 +126,7 @@ function GameController() {
   };
 
   printNewRound();
-  return { playRound, getActivePlayer };
+  return { playRound, getActivePlayer, getPlayerScores };
 }
 
 function Player(playerName, marker, score = 0) {
