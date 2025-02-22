@@ -2,8 +2,10 @@
 
 html {
   font-family: system-ui, sans-serif;
-  --player-one-background-color: lightcoral;
-  --player-two-background-color: lightblue;
+  --player-one-background-color: #f38c94;
+  --player-two-background-color: #ADD8E6;
+  --player-one-marker-color: rgb(244, 73, 73);
+  --player-two-marker-color: rgb(39, 166, 239);
   --player-one-color: #E32636;
   --player-two-color: #66D3FA;
   --border-color: #3D3D3D;
@@ -26,7 +28,8 @@ body{
 .game-card{
   background-color: white;
   aspect-ratio: 3/4;
-  height: 40%;
+  height: 45vmax;
+
   border-radius: 20px; /* Add rounded corners */
   overflow: hidden; /* Clip content within rounded corners */
   box-shadow: 0 4px 16px rgba(0,0,0,0.2); /* Increased shadow visibility */
@@ -43,12 +46,17 @@ body{
 
 .cell{
   background-color: var(--primary-white-color);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  font-size: 8vh;
+  overflow: hidden;
 }
 
 .markers-container{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  height: 100%;
+  height: 30%;
 }
 
 .player-one-marker{
@@ -57,9 +65,33 @@ body{
 
 .player-two-marker{
   background-color: var(--player-two-color);
+  
+}
+
+.player-one-marker, .player-two-marker{
+  svg{
+    stroke: var(--border-color);
+    stroke-width: 0.4;
+    filter: blur(0.3px);
+  }
 }
 
 .player-turn{
-  margin-top: 10px; /* Add margin to the top */
-  text-align: center; /* Center text within player-turn */
+  margin-top: 10px;
+  text-align: center;
+}
+
+svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+
+}
+
+.player-one-icon {
+  color: var(--player-one-marker-color);
+}
+
+.player-two-icon {
+  color: var(--player-two-marker-color);
 }
