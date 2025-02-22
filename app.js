@@ -54,7 +54,7 @@ function GameController() {
   const getPlayerScores = () => players.map((player) => {
     return {playerName: player.playerName, score: player.score}
   });
-  
+
   let activePlayer = players[0];
 
   const getActivePlayer = () => activePlayer;
@@ -71,6 +71,7 @@ function GameController() {
   const playRound = (row, column) => {
     if (board.placeMarker(row, column, activePlayer.marker) !== -1) {
       checkWin();
+      checkDraw();
       switchPlayerTurn();
     }
     printNewRound();
@@ -113,7 +114,7 @@ function GameController() {
   };
 
   const checkWin = () => {
-    let win = checkHorizontalWin() || checkVerticalWin() || checkDiagonalWin();
+    const win = checkHorizontalWin() || checkVerticalWin() || checkDiagonalWin();
 
     if (win) {
       printNewRound();
@@ -124,6 +125,17 @@ function GameController() {
       console.log(`${players[0].score} - ${players[1].score}`);
     }
   };
+
+  const checkDraw = () => {
+    const draw = board.getBoard().every((row) => row.every((cell) => cell.getValue() !== 0));
+
+    if(draw){
+      printNewRound();
+      board = GameBoard();
+      console.log(`Draw!`);
+      console.log(`${players[0].score} - ${players[1].score}`);
+    }
+  }
 
   printNewRound();
   return { playRound, getActivePlayer, getPlayerScores };
