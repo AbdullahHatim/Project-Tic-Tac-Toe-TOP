@@ -28,7 +28,7 @@ body{
 .game-card{
   background-color: white;
   aspect-ratio: 3/4;
-  height: 45vmax;
+  height: 45vh;
 
   border-radius: 20px; /* Add rounded corners */
   overflow: hidden; /* Clip content within rounded corners */
