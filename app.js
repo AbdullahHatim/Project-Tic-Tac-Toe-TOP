@@ -136,13 +136,17 @@
         console.log(`${players[0].score} - ${players[1].score}`);
       }
     }
-  
+    
+    const getBoard = () => {
+      return board.getBoard();
+    }
+
     printNewRound();
     return { 
       playRound, 
       getActivePlayer,
       getPlayerScores,
-      getBoard: board.getBoard 
+      getBoard
     };
   }
   
@@ -150,6 +154,8 @@
     return { playerName, marker, score };
   }
   
+
+  //TODO: FIX GAME DOESN'T REFRESH THE BOARD AFTER WIN
   function ScreenController(){
     const game = GameController();
     const boardContainerDiv = document.querySelector(".board-container");
