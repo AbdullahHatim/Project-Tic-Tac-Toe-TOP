@@ -173,6 +173,7 @@ svg {
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   width: 80%;
+  aspect-ratio: 3/4;
   max-width: 400px;
 }
 
@@ -204,8 +205,9 @@ svg {
 
 .form-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 20px;
+  gap: 20px;
 }
 
 .form-buttons button {
