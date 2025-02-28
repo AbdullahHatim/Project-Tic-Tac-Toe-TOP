@@ -120,8 +120,6 @@
       win = checkHorizontalWin() || checkVerticalWin() || checkDiagonalWin();
   
       if (win) {
-      //   printNewRound();
-      //   board = GameBoard();
         winner = activePlayer
         activePlayer.score++;
         console.log(`${activePlayer.playerName} Wins!`);
@@ -133,10 +131,6 @@
       draw = board.getBoard().every((row) => row.every((cell) => cell.getValue() !== 0));
   
       if(draw){
-      //   printNewRound();
-        // board = GameBoard();
-      //   console.log(`Draw!`);
-      //   console.log(`${players[0].score} - ${players[1].score}`);
       }
     }
     
@@ -174,11 +168,7 @@
   function Player(playerName, marker, score = 0, index = 0) {
     return { playerName, marker, score, index};
   }
-  
-//TODO: handle draw
-//TODO: show scores and active player
-//FIXME: 
-//BUG: 
+
 
   function ScreenController(){
     const game = GameController();
@@ -250,22 +240,31 @@
     }
 
     const highlightActivePlayer = () => {
-      if (!game.getActivePlayer().index &&
-          !game.getWinAndDraw().win &&
-          !game.getWinAndDraw().draw){
-        
+      
+      if (!game.getWinAndDraw().win && !game.getWinAndDraw().draw){
+        if (!game.getActivePlayer().index){
+        //Player One
         playerOneMarker.classList.add("animation");
         playerTwoMarker.classList.remove("animation");
+        playerTurnDiv.style["background-color"] = "var(--player-one-marker-color)";
       } else {
+        //Player Two
         playerTwoMarker.classList.add("animation");
-        playerOneMarker.classList.remove("animation"); 
+        playerOneMarker.classList.remove("animation");
+        playerTurnDiv.style["background-color"] = "var(--player-two-color)";
       }
+    } else {
+      playerTwoMarker.classList.remove("animation");
+      playerOneMarker.classList.remove("animation");
+    }
     }
 
     const setPlayerTurnDiv = () => {
       if (game.getWinAndDraw().win){
         playerTurnDiv.textContent = `${game.getWinner().playerName} WINS!`;
-        } else if (game.getWinAndDraw().draw){
+        playerTurnDiv.style["background-color"] = "";
+      } else if (game.getWinAndDraw().draw){
+          playerTurnDiv.style["background-color"] = "";
           playerTurnDiv.textContent = `DRAW!`;  
         } else {
           playerTurnDiv.textContent = `${game.getActivePlayer().playerName}'s Turn`;
@@ -273,14 +272,11 @@
         setPlayerScoreDiv()
     }
 
-    const setPlayerScoreDiv = () => {//TODO:
-      if (game.getWinAndDraw().win){
+    const setPlayerScoreDiv = () => {
         playerScoreDiv.textContent = 
         `${game.getPlayerScores()[0].score} - ${game.getPlayerScores()[1].score}`;
-        } else if (game.getWinAndDraw().draw){
-          playerScoreDiv.textContent = 
-        `${game.getPlayerScores()[0].score} - ${game.getPlayerScores()[1].score}`;
-        }
+        
+        
     }
     const placeMarker = (e) => {
       const index = e.target.dataset.index;
