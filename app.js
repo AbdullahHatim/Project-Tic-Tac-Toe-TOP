@@ -48,10 +48,11 @@
     let board = GameBoard();
     let win = false;
     let draw = false;
+    let winner;
   
     const players = [
-      Player(playerOneName, "X", 0),
-      Player(playerTwoName, "O", 0),
+      Player(playerOneName, "X", 0, 0),
+      Player(playerTwoName, "O", 0, 1),
     ];
     const getPlayerScores = () => players.map((player) => {
       return {playerName: player.playerName, score: player.score}
@@ -121,6 +122,7 @@
       if (win) {
       //   printNewRound();
       //   board = GameBoard();
+        winner = activePlayer
         activePlayer.score++;
         console.log(`${activePlayer.playerName} Wins!`);
         console.log(`${players[0].score} - ${players[1].score}`);
@@ -154,6 +156,8 @@
       win = false;
       draw = false;
     }
+
+    const getWinner = () => winner;
     printNewRound();
     return { 
       playRound, 
@@ -162,18 +166,20 @@
       getBoard,
       resetBoard,
       getWinAndDraw,
-      resetWinAndDraw
+      resetWinAndDraw,
+      getWinner
     };
   }
   
-  function Player(playerName, marker, score = 0) {
-    return { playerName, marker, score };
+  function Player(playerName, marker, score = 0, index = 0) {
+    return { playerName, marker, score, index};
   }
   
 
   //TODO: FIX GAME DOESN'T REFRESH THE BOARD AFTER WIN
   function ScreenController(){
     const game = GameController();
+    const gameContainer = document.querySelector(".container");
     const boardContainerDiv = document.querySelector(".board-container");
     const playerTurnDiv = document.querySelector(".player-turn");
     
@@ -181,7 +187,15 @@
     const playerTwoSvg = `<svg class="player-two-icon" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" /></svg>`;
 
     const updateScreen = () => {
-      // if (game.getWinAndDraw().win) highlightWinner();
+      if (game.getWinAndDraw().win) {
+        if(!game.getWinner().index){
+          gameContainer.style["background-color"] = "var(--player-one-marker-color)";
+        } else {
+          gameContainer.style["background-color"] = "var(--player-two-marker-color)";
+        }
+      } else {
+        
+      }
       boardContainerDiv.textContent = "";
       const board = game.getBoard();
   
@@ -204,16 +218,19 @@
         }
       }
     }
-    
+
     const highlightWinner = () => {
       game.resetBoard()
+      setTimeout(() => 
+        {gameContainer.style["background-color"] = "white"; 
+        }, 0);
       updateScreen();
     }
 
     function clickHandlerBoard(e) {
       if ( game.getWinAndDraw().win ){
-        game.resetWinAndDraw();
         highlightWinner();
+        game.resetWinAndDraw();
       }
       else
       placeMarker(e);
