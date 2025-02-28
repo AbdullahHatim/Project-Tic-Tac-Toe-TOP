@@ -185,6 +185,7 @@
     const gameContainer = document.querySelector(".container");
     const boardContainerDiv = document.querySelector(".board-container");
     const playerTurnDiv = document.querySelector(".player-turn");
+    const playerScoreDiv = document.querySelector(".player-score");
     const playerOneMarker = document.querySelector(".player-one-marker");
     const playerTwoMarker = document.querySelector(".player-two-marker");
     
@@ -263,13 +264,23 @@
 
     const setPlayerTurnDiv = () => {
       if (game.getWinAndDraw().win){
-        playerTurnDiv.textContent = `${game.getWinner().playerName}WIN`;
+        playerTurnDiv.textContent = `${game.getWinner().playerName} WINS!`;
         } else if (game.getWinAndDraw().draw){
-          playerTurnDiv.textContent = `${game.getActivePlayer().playerName} DRAW`;  
+          playerTurnDiv.textContent = `DRAW!`;  
         } else {
           playerTurnDiv.textContent = `${game.getActivePlayer().playerName}'s Turn`;
         }
-        
+        setPlayerScoreDiv()
+    }
+
+    const setPlayerScoreDiv = () => {//TODO:
+      if (game.getWinAndDraw().win){
+        playerScoreDiv.textContent = 
+        `${game.getPlayerScores()[0].score} - ${game.getPlayerScores()[1].score}`;
+        } else if (game.getWinAndDraw().draw){
+          playerScoreDiv.textContent = 
+        `${game.getPlayerScores()[0].score} - ${game.getPlayerScores()[1].score}`;
+        }
     }
     const placeMarker = (e) => {
       const index = e.target.dataset.index;
