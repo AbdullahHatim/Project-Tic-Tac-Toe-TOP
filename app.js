@@ -122,9 +122,8 @@
       //   printNewRound();
       //   board = GameBoard();
         activePlayer.score++;
-  
-      //   console.log(`${activePlayer.playerName} Wins!`);
-      //   console.log(`${players[0].score} - ${players[1].score}`);
+        console.log(`${activePlayer.playerName} Wins!`);
+        console.log(`${players[0].score} - ${players[1].score}`);
       }
     };
   
@@ -150,6 +149,11 @@
     const getWinAndDraw = () => {
       return { win, draw };
     }
+
+    const resetWinAndDraw = () => {
+      win = false;
+      draw = false;
+    }
     printNewRound();
     return { 
       playRound, 
@@ -157,7 +161,8 @@
       getPlayerScores,
       getBoard,
       resetBoard,
-      getWinAndDraw
+      getWinAndDraw,
+      resetWinAndDraw
     };
   }
   
@@ -176,7 +181,7 @@
     const playerTwoSvg = `<svg class="player-two-icon" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" /></svg>`;
 
     const updateScreen = () => {
-      if (game.getWinAndDraw().win) setTimeout(game.resetBoard, 0);
+      // if (game.getWinAndDraw().win) highlightWinner();
       boardContainerDiv.textContent = "";
       const board = game.getBoard();
   
@@ -200,7 +205,21 @@
       }
     }
     
+    const highlightWinner = () => {
+      game.resetBoard()
+      updateScreen();
+    }
+
     function clickHandlerBoard(e) {
+      if ( game.getWinAndDraw().win ){
+        game.resetWinAndDraw();
+        highlightWinner();
+      }
+      else
+      placeMarker(e);
+    }
+
+    const placeMarker = (e) => {
       const index = e.target.dataset.index;
   
       // Ensure the clicked element has a data-index attribute
@@ -220,7 +239,6 @@
       game.playRound(row, col);
       updateScreen();
     }
-
     boardContainerDiv.addEventListener("click", clickHandlerBoard);
     
     updateScreen();
